@@ -1,0 +1,27 @@
+{
+  "name": "typescript",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dump": "bun scripts/dumpSchema.ts",
+    "client": "bun client.ts",
+    "server": "bun server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@replit/river": "^0.14.0",
+    "@sinclair/typebox": "^0.32.20",
+    "isomorphic-ws": "^5.0.0",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/ws": "^8.5.10",
+    "bun": "^1.0.35",
+    "typescript": "^5.4.3"
+  }
+}

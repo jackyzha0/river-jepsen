@@ -13,3 +13,9 @@ gnuplot --version
 
 # ^ the above should all be successful
 ```
+
+## running tests
+
+```bash
+lein run test
+```

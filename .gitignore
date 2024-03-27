@@ -12,3 +12,6 @@ pom.xml.asc
 .hgignore
 .hg/
 store
+.clj-kondo
+.lsp
+node_modules
