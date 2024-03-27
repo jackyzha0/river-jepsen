@@ -1,4 +1,11 @@
+FROM jgoerzen/debian-base-minimal:bookworm as debian-addons
 FROM debian:bookworm-slim
+
+COPY --from=debian-addons /usr/local/preinit/ /usr/local/preinit/
+COPY --from=debian-addons /usr/local/bin/ /usr/local/bin/
+COPY --from=debian-addons /usr/local/debian-base-setup/ /usr/local/debian-base-setup/
+
+RUN run-parts --exit-on-error --verbose /usr/local/debian-base-setup
 
 ENV container=docker
 STOPSIGNAL SIGRTMIN+3
@@ -24,7 +31,7 @@ RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 # without --dev flag up.sh copies jepsen to these subfolders
 # with --dev flag they are empty until mounted
 COPY jepsen /jepsen/
-RUN if [ -f /jepsen/project.clj ]; then cd /jepsen && lein install; fi
+RUN cd /jepsen && lein install
 
 ADD ./bashrc /root/.bashrc
 ADD ./init.sh /init.sh

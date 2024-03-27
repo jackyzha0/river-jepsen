@@ -1,7 +1,14 @@
+FROM jgoerzen/debian-base-minimal:bookworm as debian-addons
 FROM debian:bookworm-slim
 
 ENV container=docker
 STOPSIGNAL SIGRTMIN+3
+
+COPY --from=debian-addons /usr/local/preinit/ /usr/local/preinit/
+COPY --from=debian-addons /usr/local/bin/ /usr/local/bin/
+COPY --from=debian-addons /usr/local/debian-base-setup/ /usr/local/debian-base-setup/
+
+RUN run-parts --exit-on-error --verbose /usr/local/debian-base-setup
 
 # Basic system stuff
 RUN apt-get -qy update && \
@@ -30,4 +37,5 @@ RUN apt-get -qy update && \
         build-essential bzip2 ca-certificates curl dirmngr dnsutils faketime iproute2 iptables iputils-ping libzip4 logrotate lsb-release man man-db netcat-openbsd net-tools ntpdate psmisc python3 rsyslog sudo tar tcpdump unzip vim wget
 
 EXPOSE 22
+
 CMD ["/usr/local/bin/boot-debian-base"]
