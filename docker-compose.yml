@@ -14,6 +14,7 @@ x-node:
   volumes:
     - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     - "jepsen-shared:/var/jepsen/shared"
+    - "./jepsen/src/fixtures:/jepsen/src/fixtures"
   networks:
     - jepsen
   cap_add:
@@ -62,7 +63,7 @@ services:
     env_file: ./secret/control.env
     ports:
       - "22"
-      - "8080"
+      - "8080:8080"
     networks:
       - jepsen
     volumes:

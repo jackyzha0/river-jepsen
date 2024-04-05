@@ -12,7 +12,7 @@
   []
   (+ 42000 (rand-int 1000)))
 
-(def root "/root")
+(def root "/jepsen/src/fixtures")
 (def dir "/tmp/jepsen")
 (def logfile (str dir "/server.log"))
 (def pidfile (str dir "/server.pid"))
@@ -40,6 +40,7 @@
         (cu/stop-daemon! cmd pidfile)
         (c/exec :rm :-rf dir))
 
+      db/LogFiles
       (log-files [_ _test _node]
         [logfile]))))
 
@@ -50,7 +51,7 @@
   (merge tests/noop-test
          opts
          {:name "basic_river"
-          :db   (river-server "bun-server")
+          :db   (river-server "test.sh")
           :ssh {:private-key-path "/root/.ssh/id_rsa"}
           :pure-generators true}))
 
