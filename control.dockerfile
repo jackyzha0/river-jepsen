@@ -14,7 +14,7 @@ ENV LEIN_ROOT true
 
 # JDK21 only in Debian testing
 RUN echo "deb http://deb.debian.org/debian testing main" >> /etc/apt/sources.list
-ADD ./apt-preferences /etc/apt/preferences
+ADD ./control/apt-preferences /etc/apt/preferences
 
 #
 # Jepsen dependencies
@@ -28,14 +28,11 @@ RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
     chmod +x /usr/bin/lein && \
     lein self-install
 
-# without --dev flag up.sh copies jepsen to these subfolders
-# with --dev flag they are empty until mounted
-COPY jepsen/project.clj /jepsen/project.clj
+COPY ./jepsen/project.clj /jepsen/project.clj
 RUN cd /jepsen && lein install
-COPY jepsen /jepsen/
 
-ADD ./bashrc /root/.bashrc
-ADD ./init.sh /init.sh
+ADD ./control/bashrc /root/.bashrc
+ADD ./control/init.sh /init.sh
 RUN dos2unix /init.sh /root/.bashrc \
     && chmod +x /init.sh
 

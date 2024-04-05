@@ -1,4 +1,0 @@
-secret/*
-!.gitkeep
-./docker-compose.yml
-jepsen

@@ -40,7 +40,6 @@
         (cu/stop-daemon! cmd pidfile)
         (c/exec :rm :-rf dir))
 
-      db/LogFiles
       (log-files [_ _test _node]
         [logfile]))))
 
@@ -50,7 +49,7 @@
   [opts]
   (merge tests/noop-test
          opts
-         {:name "basic river"
+         {:name "basic_river"
           :db   (river-server "bun-server")
           :ssh {:private-key-path "/root/.ssh/id_rsa"}
           :pure-generators true}))

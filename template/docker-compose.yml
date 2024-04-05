@@ -1,6 +1,8 @@
 x-node:
   &default-node
-  build: ./node
+  build:
+    context: .
+    dockerfile: ./node.dockerfile
   env_file: ./secret/node.env
   secrets:
     - authorized_keys
@@ -52,7 +54,9 @@ services:
     hostname: control
     depends_on:
 %%DEPS%%
-    build: ./control
+    build:
+      context: .
+      dockerfile: ./control.dockerfile
     env_file: ./secret/control.env
     ports:
       - "22"
@@ -61,5 +65,7 @@ services:
       - jepsen
     volumes:
       - "jepsen-shared:/var/jepsen/shared"
+      - "./jepsen/store:/jepsen/store"
+      - "./jepsen/src:/jepsen/src"
     stop_signal: SIGRTMIN+3
 %%DBS%%
