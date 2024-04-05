@@ -17,3 +17,5 @@ tests: containers
 results:
 	@docker exec -it jepsen-control bash -c "source /root/.bashrc && lein run serve"
 
+clean:
+	@rm -rf jepsen/store/*

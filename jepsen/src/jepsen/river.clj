@@ -51,7 +51,7 @@
   (merge tests/noop-test
          opts
          {:name "basic_river"
-          :db   (river-server "test.sh")
+          :db   (river-server "./typescript/server.sh")
           :ssh {:private-key-path "/root/.ssh/id_rsa"}
           :pure-generators true}))
 

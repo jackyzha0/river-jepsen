@@ -6,9 +6,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dump": "bun scripts/dumpSchema.ts",
-    "client": "bun client.ts",
-    "server:bun": "bun server.ts"
+    "dump": "bun scripts/dumpSchema.ts"
   },
   "author": "",
   "license": "ISC",
