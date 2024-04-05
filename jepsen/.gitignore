@@ -14,4 +14,3 @@ pom.xml.asc
 store
 .clj-kondo
 .lsp
-node_modules
