@@ -1,4 +1,4 @@
-FROM jgoerzen/debian-base-minimal:bookworm as debian-addons
+FROM jgoerzen/debian-base-standard:bookworm as debian-addons
 FROM debian:bookworm-slim
 
 COPY --from=debian-addons /usr/local/preinit/ /usr/local/preinit/
@@ -30,8 +30,9 @@ RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 
 # without --dev flag up.sh copies jepsen to these subfolders
 # with --dev flag they are empty until mounted
-COPY jepsen /jepsen/
+COPY jepsen/project.clj /jepsen/project.clj
 RUN cd /jepsen && lein install
+COPY jepsen /jepsen/
 
 ADD ./bashrc /root/.bashrc
 ADD ./init.sh /init.sh

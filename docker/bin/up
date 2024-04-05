@@ -129,8 +129,8 @@ fi
 bin/build-docker-compose "${NODE_COUNT}"
 
 # Make sure folders referenced in control Dockerfile exist and don't contain leftover files
-rm -rf ./control/jepsen
-mkdir -p ./control/jepsen
+rm -rf ./control/jepsen ./node/jepsen
+mkdir -p ./control/jepsen ./node/jepsen
 # Copy the jepsen directory if we're not mounting the JEPSEN_ROOT
 if [ -z "${DEV}" ]; then
     exclude_params=(
@@ -147,6 +147,12 @@ if [ -z "${DEV}" ]; then
     (
         (cd ..; tar "${exclude_params[@]}" -cf - .)  | tar Cxf ./control/jepsen -
         cp -r ../store/* ./control/jepsen/store/
+    )
+
+    INFO "Copying .. to node/jepsen"
+    (
+        (cd ..; tar "${exclude_params[@]}" -cf - .)  | tar Cxf ./node/jepsen -
+        cp -r ../store/* ./node/jepsen/store/
     )
 fi
 

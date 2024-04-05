@@ -1,4 +1,17 @@
-FROM jgoerzen/debian-base-minimal:bookworm as debian-addons
+FROM jgoerzen/debian-base-standard:bookworm as debian-addons
+
+#### FIXTURES ####
+FROM oven/bun AS fixtures
+COPY jepsen/src/fixtures /fixtures
+
+# Install deps
+WORKDIR /fixtures/typescript
+RUN ls
+RUN bun install
+RUN bun run dump --silent > ../schema.json
+RUN bun build server.ts --compile --outfile bun-server
+
+#### Actual image ####
 FROM debian:bookworm-slim
 
 ENV container=docker
@@ -37,5 +50,8 @@ RUN apt-get -qy update && \
         build-essential bzip2 ca-certificates curl dirmngr dnsutils faketime iproute2 iptables iputils-ping libzip4 logrotate lsb-release man man-db netcat-openbsd net-tools ntpdate psmisc python3 rsyslog sudo tar tcpdump unzip vim wget
 
 EXPOSE 22
+
+WORKDIR /fixtures
+COPY --from=fixtures /fixtures/typescript/bun-server /root/bun-server
 
 CMD ["/usr/local/bin/boot-debian-base"]

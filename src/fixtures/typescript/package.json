@@ -8,7 +8,7 @@
   "scripts": {
     "dump": "bun scripts/dumpSchema.ts",
     "client": "bun client.ts",
-    "server": "bun server.ts"
+    "server:bun": "bun server.ts"
   },
   "author": "",
   "license": "ISC",
